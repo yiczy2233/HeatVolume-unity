@@ -3,7 +3,7 @@ Shader "Custom/HeatRaymarching_Final"
     Properties
     {
         _Opacity ("Overall Opacity", Range(0, 5)) = 1.0
-        _Contrast ("Heat Contrast", Range(1, 10)) = 2.0
+        _Contrast ("Heat Contrast", Range(0, 10)) = 2.0
         _StepSize ("Step Size", Range(0.01, 0.2)) = 0.05
         [Toggle] _IsCylinder("Is Cylinder Shape", Float) = 0
     }

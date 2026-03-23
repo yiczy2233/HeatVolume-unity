@@ -42,7 +42,7 @@ Material:
     - _ConstantThickness: 1
     - _DepthThicknessRemap: 1
     - _EnableAbsorbtion: 0
-    - _IOR: 2.32
+    - _IOR: 4
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionDistance: 10

@@ -52,11 +52,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _AbsorbtionStrength: 10
-    - _EnableAbsorbtion: 1
-    - _IOR: 1.33
+    - _EnableAbsorbtion: 0
+    - _IOR: 1
     - _QueueControl: 1
     - _QueueOffset: 0
-    - _RefractionDistance: 1.5
+    - _RefractionDistance: 6.19
     m_Colors:
     - _AbsorbtionColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

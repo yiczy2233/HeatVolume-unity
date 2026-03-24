@@ -7,17 +7,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_HeatRaymarching_Final
-  m_Shader: {fileID: 4800000, guid: 9e4889d4833d98b4cbc2167224f77424, type: 3}
+  m_Name: Custom_SensorNode_SciFi
+  m_Shader: {fileID: 4800000, guid: 73a8b263299e9a04d9fb346f08784ed5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _ISCYLINDER_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -26,10 +25,11 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Contrast: 1.54
-    - _IsCylinder: 1
-    - _Opacity: 0.66
-    - _StepSize: 0.056
-    m_Colors: []
+    - _FresnelPower: 1
+    - _PulseMinOpacity: 0.5
+    - _PulseSpeed: 1
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

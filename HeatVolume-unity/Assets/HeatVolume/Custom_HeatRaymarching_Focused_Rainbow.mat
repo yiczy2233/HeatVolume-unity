@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_HeatRaymarching_Final
-  m_Shader: {fileID: 4800000, guid: 9e4889d4833d98b4cbc2167224f77424, type: 3}
+  m_Name: Custom_HeatRaymarching_Focused_Rainbow
+  m_Shader: {fileID: 4800000, guid: e0b0d16b11f2fac46ab111242e03d727, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -26,10 +26,14 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Contrast: 1.54
+    - _ColorDist: 1.33
+    - _Distortion: 0
+    - _GlowIntensity: 10
     - _IsCylinder: 1
-    - _Opacity: 0.66
-    - _StepSize: 0.056
+    - _NoiseScale: 3.08
+    - _NoiseSpeed: 1.19
+    - _Opacity: 0.2
+    - _StepSize: 0.026
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

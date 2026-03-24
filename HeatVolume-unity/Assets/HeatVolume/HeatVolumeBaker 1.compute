@@ -18,6 +18,7 @@ void BakeVolume(uint3 id : SV_DispatchThreadID)
     float3 uvw = (float3) id / (_TextureSize - 1.0);
     float3 worldPos = _BoundsMin + uvw * _BoundsSize;
 
+    
     float maxIntensity = 0;
     float maxWeight = 0;
 
@@ -30,19 +31,15 @@ void BakeVolume(uint3 id : SV_DispatchThreadID)
         
         if (d < _Radius)
         {
-            
-            float t = saturate(d / _Radius);
-            float influence = 1.0 - t * t * (3.0 - 2.0 * t);
+            float w = saturate(1.0 - (d / _Radius));
+            float influence = w * w;
             
             
             maxIntensity = max(maxIntensity, sensorTemp * influence);
+            
             maxWeight = max(maxWeight, influence);
         }
     }
-
-    
-    maxIntensity = max(maxIntensity, 0.01);
-    maxWeight = max(maxWeight, 0.1);
 
     VolumeTexture[id] = float2(saturate(maxIntensity), saturate(maxWeight));
 }

@@ -1,4 +1,4 @@
-Shader "Custom/HeatRaymarching_Final"
+Shader "Custom/HeatRaymarching_MIP"
 {
     Properties
     {
@@ -11,7 +11,7 @@ Shader "Custom/HeatRaymarching_Final"
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" "RenderPipeline"="UniversalPipeline" }
         
-        // --- 修改1：改回标准透明混合，防止过曝 ---
+        // --- 关键修改：使用 Alpha 混合，但我们会手动控制颜色 ---
         Blend SrcAlpha OneMinusSrcAlpha 
         ZWrite Off
         Cull Front 
@@ -41,9 +41,9 @@ Shader "Custom/HeatRaymarching_Final"
             float3 HeatToColor(float h)
             {
                 h = saturate(pow(h, _Contrast));
-                float3 blue = float3(0, 0.1, 0.6);
-                float3 green = float3(0, 0.6, 0.3);
-                float3 yellow = float3(1, 0.8, 0);
+                float3 blue = float3(0, 0.2, 0.8);
+                float3 green = float3(0, 0.8, 0.4);
+                float3 yellow = float3(1, 0.9, 0);
                 float3 red = float3(1, 0, 0);
 
                 if (h < 0.25) return lerp(blue, green, h / 0.25);
@@ -72,10 +72,12 @@ Shader "Custom/HeatRaymarching_Final"
                 float t = max(0, hit.x);
                 float tMax = hit.y;
 
-                float4 finalColor = 0;
+                // --- 核心逻辑：最大值投射 (MIP) ---
+                float bestHeat = 0;
+                float bestWeight = 0;
 
                 for(int i=0; i<128; i++) {
-                    if(t >= tMax || finalColor.a >= 0.95) break; // --- 修改2：Alpha 饱和后停止步进 ---
+                    if(t >= tMax) break;
                     
                     float3 p = ro + rd * t;
                     float3 uvw = p;
@@ -84,20 +86,24 @@ Shader "Custom/HeatRaymarching_Final"
 
                     if(all(uvw >= 0) && all(uvw <= 1)) {
                         float2 data = SAMPLE_TEXTURE3D_LOD(_VolumeTexture, sampler_VolumeTexture, uvw, 0).xy;
-                        float heat = data.x;
-                        float weight = data.y;
-
-                        if(weight > 0.01) {
-                            float3 c = HeatToColor(heat);
-                            // --- 修改3：经典的 Front-to-Back 混合公式 ---
-                            float alpha = weight * _StepSize * _Opacity;
-                            finalColor.rgb += (1.0 - finalColor.a) * c * alpha;
-                            finalColor.a += (1.0 - finalColor.a) * alpha;
+                        
+                        // 记录整条视线上最热的数值
+                        if(data.x > bestHeat) {
+                            bestHeat = data.x;
                         }
+                        // 记录最大权重决定不透明度
+                        bestWeight = max(bestWeight, data.y);
                     }
                     t += _StepSize;
                 }
-                return finalColor;
+
+                if(bestWeight < 0.01) discard;
+
+                // 最终颜色只取决于整条路径上最热的点
+                float3 finalRGB = HeatToColor(bestHeat);
+                float finalAlpha = saturate(bestWeight * _Opacity);
+
+                return half4(finalRGB, finalAlpha);
             }
             ENDHLSL
         }

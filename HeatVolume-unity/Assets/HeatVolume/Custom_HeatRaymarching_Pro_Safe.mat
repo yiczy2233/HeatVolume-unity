@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_HeatRaymarching_Final
-  m_Shader: {fileID: 4800000, guid: 9e4889d4833d98b4cbc2167224f77424, type: 3}
+  m_Name: Custom_HeatRaymarching_Pro_Safe
+  m_Shader: {fileID: 4800000, guid: 830fac2c151cd9647ae8a8168d829721, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -26,10 +26,13 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Contrast: 1.54
+    - _Contrast: 4
+    - _GlowIntensity: 10
     - _IsCylinder: 1
-    - _Opacity: 0.66
-    - _StepSize: 0.056
+    - _NoiseScale: 10
+    - _NoiseSpeed: 2
+    - _Opacity: 0.5
+    - _StepSize: 0.061
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -26,10 +26,10 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Contrast: 1.54
+    - _Contrast: 1
     - _IsCylinder: 1
-    - _Opacity: 0.66
-    - _StepSize: 0.056
+    - _Opacity: 1
+    - _StepSize: 0.01
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

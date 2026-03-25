@@ -1,0 +1,55 @@
+#pragma kernel BakeVolume
+
+RWTexture3D<float2> VolumeTexture;
+
+float4 _SensorPositions[1024];
+int _SensorCount;
+float _Radius;
+float3 _BoundsMin;
+float3 _BoundsSize;
+float3 _TextureSize;
+
+[numthreads(8, 8, 8)]
+void BakeVolume(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint) _TextureSize.x || id.y >= (uint) _TextureSize.y || id.z >= (uint) _TextureSize.z)
+        return;
+
+    float3 uvw = (float3) id / (_TextureSize - 1.0);
+    float3 worldPos = _BoundsMin + uvw * _BoundsSize;
+
+    float sumWeights = 0;
+    float sumWeightedIntensity = 0;
+    float maxInfluence = 0;
+
+    for (int i = 0; i < _SensorCount; i++)
+    {
+        float3 sensorPos = _SensorPositions[i].xyz;
+        float sensorTemp = _SensorPositions[i].w / 100.0;
+        
+        
+        float d = distance(worldPos, sensorPos);
+
+        
+        
+        float3 diff = worldPos - sensorPos;
+    
+    
+        float verticalBias = 1.0;
+        float distSq = diff.x * diff.x + (diff.y * diff.y * verticalBias) + diff.z * diff.z;
+
+        float w = 1.0 / (distSq + 0.001);
+        sumWeightedIntensity += sensorTemp * w;
+        sumWeights += w;
+
+       
+        float influence = saturate(1.0 - (d / (_Radius * 2.5)));
+        maxInfluence = max(maxInfluence, influence * influence);
+    }
+
+    
+    float finalIntensity = (sumWeights > 0) ? (sumWeightedIntensity / sumWeights) : 0;
+    
+   
+    VolumeTexture[id] = float2(saturate(finalIntensity), saturate(maxInfluence));
+}

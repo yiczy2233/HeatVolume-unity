@@ -26,8 +26,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Contrast: 0.33
-    - _GlowIntensity: 1.38
+    - _Contrast: 0.8
+    - _GlowIntensity: 1
     - _IsCylinder: 1
     - _NoiseScale: 10
     - _NoiseSpeed: 2

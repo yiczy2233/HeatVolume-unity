@@ -12,8 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _ISCYLINDER_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -26,13 +25,13 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _ColorDist: 0.6
-    - _GlowIntensity: 3.34
-    - _IsCylinder: 1
+    - _ColorDist: 0.99
+    - _GlowIntensity: 10
+    - _IsCylinder: 0
     - _NoiseScale: 10
-    - _NoiseSpeed: 1.15
+    - _NoiseSpeed: 2
     - _Opacity: 0.3
-    - _StepSize: 0.2
+    - _StepSize: 0.02
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

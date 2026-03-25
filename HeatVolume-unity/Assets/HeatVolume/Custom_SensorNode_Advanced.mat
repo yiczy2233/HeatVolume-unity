@@ -25,7 +25,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _FresnelPower: 3
+    - _FresnelPower: 3.13
     - _PulseIntensity: 0.4
     - _PulseMinOpacity: 0.5
     - _PulseSpeed: 2

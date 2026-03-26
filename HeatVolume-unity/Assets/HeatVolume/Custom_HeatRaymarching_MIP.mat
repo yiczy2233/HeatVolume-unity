@@ -26,7 +26,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Contrast: 1
-    - _IsCylinder: 0
+    - _IsCylinder: 1
     - _Opacity: 1
     - _StepSize: 0.015
     m_Colors: []

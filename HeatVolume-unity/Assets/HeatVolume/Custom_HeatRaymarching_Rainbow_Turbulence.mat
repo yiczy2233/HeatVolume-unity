@@ -27,7 +27,7 @@ Material:
     m_Floats:
     - _ColorDist: 0.99
     - _GlowIntensity: 10
-    - _IsCylinder: 0
+    - _IsCylinder: 1
     - _NoiseScale: 10
     - _NoiseSpeed: 2
     - _Opacity: 0.3

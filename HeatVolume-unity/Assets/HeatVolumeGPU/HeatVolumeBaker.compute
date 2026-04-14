@@ -1,0 +1,49 @@
+#pragma kernel BakeVolume
+
+RWTexture3D<float2> VolumeTexture;
+
+// Increased array size to match C# sensorData[512]
+float4 _SensorPositions[1024];
+int _SensorCount;
+float _Radius;
+float3 _BoundsMin;
+float3 _BoundsSize;
+float3 _TextureSize;
+
+[numthreads(8, 8, 8)]
+void BakeVolume(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint) _TextureSize.x || id.y >= (uint) _TextureSize.y || id.z >= (uint) _TextureSize.z)
+        return;
+
+    // Calculate UVW in [0, 1] range
+    float3 uvw = (float3) id / (_TextureSize - 1.0);
+    
+    // Map UVW to World Space using the provided bounds
+    float3 worldPos = _BoundsMin + uvw * _BoundsSize;
+
+    float accumulatedIntensity = 0;
+    float maxWeight = 0;
+
+    // Iterate through all active sensors
+    for (int i = 0; i < _SensorCount; i++)
+    {
+        float3 sensorPos = _SensorPositions[i].xyz;
+        float sensorTemp = _SensorPositions[i].w;
+        
+        float d = distance(worldPos, sensorPos);
+        
+        if (d < _Radius)
+        {
+            // Quadratic falloff for smoother visuals
+            float w = saturate(1.0 - (d / _Radius));
+            float influence = w * w;
+            
+            accumulatedIntensity += (sensorTemp / 50.0) * influence;
+            maxWeight = max(maxWeight, influence);
+        }
+    }
+
+    // Output: x = normalized heat intensity, y = influence weight for transparency
+    VolumeTexture[id] = float2(saturate(accumulatedIntensity), saturate(maxWeight));
+}
